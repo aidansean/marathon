@@ -1,0 +1,30 @@
+canvas#canvas_graph{
+  border : 2px solid black ;
+  width  : 750px ;
+  height : 3795px ;
+  margin : auto ;
+}
+canvas#canvas_total_time, canvas#canvas_leg_1, canvas#canvas_leg_2, canvas#canvas_leg_3, canvas#canvas_leg_4, canvas#canvas_leg_5, canvas#canvas_leg_6{
+  width  : 750px ;
+  height : 750px ;
+  margin : auto ;
+}
+table#team_details{
+  width : 660px ;
+  margin : auto ;
+}
+th{
+  width : 110px ;
+  text-align : center ;
+}
+td{
+  width : 100px ;
+  text-align : center ;
+}
+.t_leg0{ background-color : #dddddd ; }
+.t_leg1{ background-color : #ccaaaa ; }
+.t_leg2{ background-color : #ccccaa ; }
+.t_leg3{ background-color : #aaccaa ; }
+.t_leg4{ background-color : #aaaacc ; }
+.t_leg5{ background-color : #ccaacc ; }
+.t_leg6{ background-color : #aacccc ; }
