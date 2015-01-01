@@ -5,8 +5,8 @@ canvas#canvas_graph{
   margin : auto ;
 }
 canvas#canvas_total_time, canvas#canvas_leg_1, canvas#canvas_leg_2, canvas#canvas_leg_3, canvas#canvas_leg_4, canvas#canvas_leg_5, canvas#canvas_leg_6{
-  width  : 750px ;
-  height : 750px ;
+  width  : 350px ;
+  height : 350px ;
   margin : auto ;
 }
 table#team_details{

@@ -1,13 +1,24 @@
 <?php
 $title = 'Geneva Relay Marathon 2013' ;
-$js_scripts = array('data.js' , 'histogram.js' , 'functions.js') ;
-include($_SERVER['FILE_PREFIX'] . '/_core/preamble.php') ;
+$stylesheets = array('style.css') ;
+$js_scripts = array() ;
+$js_scripts[] = 'data.js' ;
+$js_scripts[] = 'histogram.js' ;
+$js_scripts[] = 'functions.js' ;
+
+include($_SERVER['DOCUMENT_ROOT'] . '/_core/preamble.php') ;
+echo '<script type="text/javascript">' , PHP_EOL ;
+echo 'var highlight = ';
+if(isset($_GET['team'])){ echo "'" . $_GET['team'] . "'" ; }
+else{ echo "'Average team'" ; }
+echo ' ;' , PHP_EOL ;
+
+$dli = (isset($_GET['double_leg_index'])) ? $_GET['double_leg_index'] : -1 ;
+echo 'var double_leg_index = ' , $dli , ' ;' , PHP_EOL ;
+
+echo '</script>' , PHP_EOL ;
 ?>
-<script>
-var highlight = <?php echo (isset($_GET['team'])) ? "'" . $_GET['team'] . "'" : "'Average team'" ;?> ;
-double_leg_index = <?php if(isset($_GET['double_leg_index'])){ echo $_GET['double_leg_index'] ; } else { echo '-1' ; } ?> ;
-  <?php if(isset($_GET['double_leg'])) echo 'find_double_legs() ; ' , PHP_EOL ; ?>
-</script>
+
   <div class="right">
     <h3>Graph</h3>
     <div class="blurb">
@@ -108,56 +119,26 @@ double_leg_index = <?php if(isset($_GET['double_leg_index'])){ echo $_GET['doubl
       <div id="div_double_legs"></div>
 
       <p>Overall standings:</p>
-      <canvas id="canvas_graph" width="750" height=3795"/>
+      <canvas id="canvas_graph" width="750" height="3795"></canvas>
     </div>
   </div>
 
   <div class="right">
     <h3>Total time</h3>
-    <div class="blurb">
-      <canvas id="canvas_total_time" width="750" height=750"/>
+    <div class="blurb center">
+      <canvas id="canvas_total_time" width="350" height="350"></canvas>
     </div>
   </div>
 
   <div class="right">
-    <h3>Leg 1</h3>
-    <div class="blurb">
-      <canvas id="canvas_leg_1" width="750" height="750"/>
-    </div>
-  </div>
-
-  <div class="right">
-    <h3>Leg 2</h3>
-    <div class="blurb">
-      <canvas id="canvas_leg_2" width="750" height=750"/>
-    </div>
-  </div>
-
-  <div class="right">
-    <h3>Leg 3</h3>
-    <div class="blurb">
-      <canvas id="canvas_leg_3" width="750" height=750"/>
-    </div>
-  </div>
-
-  <div class="right">
-    <h3>Leg 4</h3>
-    <div class="blurb">
-      <canvas id="canvas_leg_4" width="750" height=750"/>
-    </div>
-  </div>
-
-  <div class="right">
-    <h3>Leg 5</h3>
-    <div class="blurb">
-      <canvas id="canvas_leg_5" width="750" height=750"/>
-    </div>
-  </div>
-
-  <div class="right">
-    <h3>Leg 6</h3>
-    <div class="blurb">
-      <canvas id="canvas_leg_6" width="750" height=750"/>
+    <h3>Leg times</h3>
+    <div class="blurb center">
+      <canvas id="canvas_leg_1" width="350" height="350"></canvas>
+      <canvas id="canvas_leg_2" width="350" height="350"></canvas>
+      <canvas id="canvas_leg_3" width="350" height="350"></canvas>
+      <canvas id="canvas_leg_4" width="350" height="350"></canvas>
+      <canvas id="canvas_leg_5" width="350" height="350"></canvas>
+      <canvas id="canvas_leg_6" width="350" height="350"></canvas>
     </div>
   </div>
 

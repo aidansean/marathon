@@ -1,7 +1,8 @@
 function histogram_object(xAxis, title){
-  this.margin = 100 ;
+  this.margin =  25 ;
   this.canvas = document.getElementById('canvas_'+xAxis) ;
   this.context = this.canvas.getContext('2d') ;
+  this.context.translate(0.5,0.5) ;
   this.xMin  =  1e30 ;
   this.xMax  = -1e30 ;
   this.nBins =    20 ;
@@ -88,9 +89,9 @@ function histogram_object(xAxis, title){
       if(i%4==0){
         this.context.fillStyle = '#000000' ;
         this.context.textAlign = 'center' ;
-        this.context.font = '20px arial' ;
+        this.context.font = axis_label_size + 'px arial' ;
         var u = this.xMin + (this.xMax-this.xMin)*i/this.nBins ;
-        this.context.fillText(u,x,y1+2*this.tickLength) ;
+        this.context.fillText(u,x,y1+1*this.tickLength) ;
         this.context.fill() ;
         y2 = y1 - 2*this.tickLength ;
         y4 = y3 + 2*this.tickLength ;
@@ -110,8 +111,8 @@ function histogram_object(xAxis, title){
       if(y_value%5==0){
         this.context.fillStyle = '#000000' ;
         this.context.textAlign = 'center' ;
-        this.context.font = '20px arial' ;
-        this.context.fillText(y_value,x1-2*this.tickLength,y) ;
+        this.context.font = axis_label_size + 'px arial' ;
+        this.context.fillText(y_value,x1-1*this.tickLength,y) ;
         this.context.fill() ;
         x2 = x1 + 2*this.tickLength ;
         x4 = x3 - 2*this.tickLength ;

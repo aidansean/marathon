@@ -79,6 +79,7 @@ var yaxis_width  = 225 ;
 var title_height =  50 ;
 var title_size   =  40 ;
 var text_dy      =   3 ;
+var axis_label_size = 10 ;
 var ch = margin + title_height + (spacer_y+entry_height)*teams.length + spacer_y + margin ;
 var rx = (cw-2*margin-yaxis_width)/latest_possible_end ;
 var histograms = new Array() ;
@@ -86,9 +87,8 @@ var histograms = new Array() ;
 var canvas  = 0 ;
 var context = 0 ;
 
-var field     = 'total_time' ;
-var dir       = 'asc' ;
-var double_leg_index = -1 ;
+var field = 'total_time' ;
+var dir   = 'asc' ;
 
 var           colors = new Array() ;
 var highlight_colors = new Array() ;
@@ -100,11 +100,11 @@ highlight_colors[4] = '#ff22ff' ; colors[4] = '#cc66cc' ;
 highlight_colors[5] = '#22ffff' ; colors[5] = '#66cccc' ;
 
 function start(){
-  canvas  = document.getElementById("canvas_graph") ;
+  canvas  = Get("canvas_graph") ;
   context = canvas.getContext('2d') ;
 
   teams.sort(function(a,b) { if(a.name<b.name) return -1 ; if(a.name>b.name) return 1 ; return 0 ; } ) ;
-  var select = document.getElementById('select_team') ;
+  var select = Get('select_team') ;
   for(var i=0 ; i<teams.length ; i++){
     if(teams[i].name=='Average team') continue ;
     var option = document.createElement('option') ;
@@ -123,6 +123,7 @@ function start(){
   update_sort() ;
   update_highlight_info() ;
   draw_all() ;
+  if(double_leg_index!=-1) find_double_legs() ;
 }
 
 function draw_all(){
@@ -194,8 +195,8 @@ function draw_title(){
   context.fill() ;
 }
 function update_sort(){
-  field = document.getElementById('select_field').value ;
-  dir   = document.getElementById('select_dir'  ).value ;
+  field = Get('select_field').value ;
+  dir   = Get('select_dir'  ).value ;
   var m = (dir=='asc') ? 1 : -1 ;
   if(field=='total_time') teams.sort( function(a,b){ return (m*a.seconds_total            - m*b.seconds_total           ) ; } ) ;
   else if(field=='leg_1') teams.sort( function(a,b){ return (m*a.runners[0].seconds_total - m*b.runners[0].seconds_total) ; } ) ;
@@ -210,7 +211,7 @@ function update_sort(){
   draw_all() ;
 }
 function update_highlight(){
-  highlight = document.getElementById('select_team').value ;
+  highlight = Get('select_team').value ;
   update_sort() ;
   draw_all() ;
   update_highlight_info() ;
@@ -224,20 +225,20 @@ function update_highlight_info(){
       var s = team.seconds_total%60 ;
       if(m<10) m = '0' + m ;
       if(s<10) s = '0' + s ;
-      document.getElementById('td_team_name').innerHTML = team.name ;
-      document.getElementById('td_team_time').innerHTML = h+':'+m+':'+s ;
-      document.getElementById('td_team_rank').innerHTML = team.rank + '/' + teams.length ;
+      Get('td_team_name').innerHTML = team.name ;
+      Get('td_team_time').innerHTML = h+':'+m+':'+s ;
+      Get('td_team_rank').innerHTML = team.rank + '/' + teams.length ;
       for(var j=0 ; j<team.runners.length ; j++){
         h = Math.floor(team.runners[j].seconds_total/3600) ;
         m = Math.floor((team.runners[j].seconds_total-3600*h)/60) ;
         s = team.runners[j].seconds_total%60 ;
         if(m<10) m = '0' + m ;
         if(s<10) s = '0' + s ;
-        document.getElementById('td_leg'+(j+1)+'_name').innerHTML = team.runners[j].name ;
-        document.getElementById('td_leg'+(j+1)+'_time').innerHTML = h+':'+m+':'+s ;
-        document.getElementById('td_leg'+(j+1)+'_rank').innerHTML = team.runners[j].rank + '/' + teams.length ;
-        document.getElementById('td_leg'+(j+1)+'_overtook' ).innerHTML = team.runners[j].overtook ;
-        document.getElementById('td_leg'+(j+1)+'_overtaken').innerHTML = team.runners[j].overtaken ;
+        Get('td_leg'+(j+1)+'_name').innerHTML = team.runners[j].name ;
+        Get('td_leg'+(j+1)+'_time').innerHTML = h+':'+m+':'+s ;
+        Get('td_leg'+(j+1)+'_rank').innerHTML = team.runners[j].rank + '/' + teams.length ;
+        Get('td_leg'+(j+1)+'_overtook' ).innerHTML = team.runners[j].overtook ;
+        Get('td_leg'+(j+1)+'_overtaken').innerHTML = team.runners[j].overtaken ;
       }
       break ;
     }
@@ -250,8 +251,9 @@ function find_double_legs(){
       if(teams[i].runners[j].name==teams[i].runners[j+1].name){
         var time = teams[i].runners[j].seconds_total + teams[i].runners[j+1].seconds_total ;
         var text = 'Team '+teams[i].name+' has the runner '+teams[i].runners[j].name+' running legs '+(j+1)+' and '+(j+2) + ' (' + time + ')<br />' ;
-        document.getElementById('div_double_legs').innerHTML += text ;
+        Get('div_double_legs').innerHTML += text ;
       }
     }
   }
 }
+function Get(id){ return document.getElementById(id) ; }
